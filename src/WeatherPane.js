@@ -1,62 +1,61 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import {  useState, useEffect } from 'react';
+import {  useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './WeatherPane.css';
 import myGif from './images/icons8-location.gif'; 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en' 
+import { CityContext } from './Context/CityContext';
+import NavigationBar from './NavigationBar';
 
 //const weatherContext = React.createContext();
 
 
 export default function WeatherPane() {
+ // debugger;
+     const cityNameContext = useContext(CityContext)
+     const [ city,setCity ] = useState(cityNameContext.city.name);
+     console.log("***** from weatherPane - cityNameContext.city.name",cityNameContext);
+     let weatherData = cityNameContext.weatherData;
+     let counter = cityNameContext.city.counter;
+    //let changeCity = cityNameContext.cityName.update;
+   // let weatherData = cityNameContext.weatherData;
 
-     const [ city,setCity ] = useState('Thiruvananthapuram');
-     const [ weatherData, setWeatherData ] = useState();
+   //  const [ weatherData, setWeatherData ] = useState();
      const [stylePath] = useState(     
       );
 
-    const APIKey = '05c7464eb07c4ec9b73131828220803';
-    const url = `http://api.weatherapi.com/v1/current.json?key=${APIKey}&q=${city}&aqi=no`;
+    // const APIKey = '05c7464eb07c4ec9b73131828220803';
+    // const url = `http://api.weatherapi.com/v1/current.json?key=${APIKey}&q=${city}&aqi=no`;
       
-     console.log(url);
+  //   console.log(url);
+
+     useEffect(()=>{
+      //debugger;
+      console.log("cityName from useEffect - Context",cityNameContext.cityName);
+      cityNameContext.update()
+     },[])
  
- const getData = () => {
-    
-    axios.get(url)
-      .then(res => 
-      setWeatherData(res.data))
-      .catch(err => console.log(err))
-
-      console.log("weatherData:---"+weatherData);
-  }
 
 
-    useEffect(()=>{
-       getData();
-    },[])
-
-    const handleSubmit = () =>{
-        
-        console.log("handleSubmit");
-        getData();
-    }
-    console.log(weatherData);
-
-    const handleChange = (e) =>{
-        console.log("inside HandleChaneg"+e.target.value);
-      setCity(e.target.value);
-    }
+// Understand useEffect Hook not | setTimeOutInterval 
 
 
-    const handleKeyPress=(e)=>{
-        console.log("handleChange is being callled");
-      if(e.charCode==="13"){
-        handleSubmit();
-      }
-    }
+
+    // const handleChange = (e) =>{
+    //     console.log("inside HandleChaneg"+e.target.value);
+    //   changeCity(e.target.value);
+    // }
+
+
+    // const handleKeyPress=(e)=>{
+    //     console.log("handleChange is being callled");
+    //   if(e.charCode==="13"){
+    //     handleSubmit();
+    //   }
+    // }
 
     const icon = weatherData ? weatherData.current.condition.icon : '';
     const text = weatherData ? weatherData.current.condition.text: ''; 
@@ -84,6 +83,7 @@ export default function WeatherPane() {
 
   return (
     <div>
+      
      <link rel="stylesheet" type="text/css" href={stylePath} />      
 <small>
  <div className="card text-center"> 
@@ -104,6 +104,7 @@ export default function WeatherPane() {
 
   <ul className="list-group">
   <li className="list-group-item"><img src={icon} alt="weather"/>  {text}</li> 
+  {/* <li className="list-group-item">Counter :{ counter }</li> */}
   <li className="list-group-item">Celsius :{celsius}</li>
   <li className="list-group-item">Fahrenheit :{fahrenheit}</li>
   <li className="list-group-item">Humidity: {humidity}</li>

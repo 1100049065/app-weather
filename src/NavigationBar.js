@@ -6,9 +6,32 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import myLoc from './images/icons8-place-marker-16.png';
 import AppLogo2 from './images/AppLogo2.png';
+import { CityContext } from './Context/CityContext';
+import { useContext, useState } from "react";
 
 function NavigationBar(props) {
-  return (
+
+  debugger;
+     const cityNameContext = useContext(CityContext)
+     console.log(cityNameContext.city.name);
+     const [ cityFromInput, setCityInput ] = useState();
+     var cityInput = '';
+
+  
+  const handleSubmit=(event)=>{
+    debugger;
+    cityInput = event.target.value;
+    console.log("cityInput from Navbar: ",cityInput);
+    cityNameContext.cityName = cityInput;
+    console.log("from navbar , cityNameContext.city.name---------------------------",cityNameContext.city.name);
+  }
+
+  const handleSearch=()=>{
+    setCityInput(cityInput);
+
+  }
+
+  return (    
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -33,8 +56,8 @@ function NavigationBar(props) {
         <p className="nav-link" href="#"><img src={myLoc} alt="my-gif" /> {props.region} </p>
       </li>
       </ul>
-      <input className="form-control mr-sm-2" type="search" placeholder="Search for a city" aria-label="Search" />
-      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search </button>
+      <input className="form-control mr-sm-2" type="search" onKeyUp={ handleSubmit } placeholder="Search for a city" aria-label="Search" />
+      <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={ handleSearch }>Search </button>
     </form>
   </div>
 </nav>
