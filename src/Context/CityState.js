@@ -8,12 +8,12 @@ const CityState = (props)=> {
 
 
   let cityDefault = "Rohtak";
-  let cityName = '';
-    // const cityName = {
-    //     "name":"Rohtak",
-    //     "counter":1
-    // } 
-   cityInput==''?cityInput==cityDefault: cityInput; 
+  //let cityName = '';
+    const cityName = {
+        "name":"Rohtak",
+        "counter":1
+    } 
+   //cityInput==''?cityInput==cityDefault: cityInput; 
 
     console.log("props.CityContext-------",props)
     
