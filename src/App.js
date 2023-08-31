@@ -1,22 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
-import WeatherPane from './WeatherPane';
+import WeatherReport from './WeatherReport';
 //import WeatherState from './context/weather/WeatherState';
 import NavigationBar from './NavigationBar';
-import CityContext from './Context/CityContext';
-import CityState from './Context/CityState';
+//import  { WeatherProvider }   from './Context/CityContext';
+import WeatherProvider from './WeatherContext';
+
 
 function App() {
+  //console.log("App.js | city -",city);
   return (
     <div className="App">
-      <CityState>
-        <NavigationBar/>
+        <WeatherProvider>  
+       {/* <WeatherPane/> */}
+        <NavigationBar/>  
         <header className="App-header">
-        <WeatherPane/>  
+        <WeatherReport/>  
       </header>
-      </CityState>
+       </WeatherProvider>
     </div>
   );
 }
 
-export default App;
+
+ export default App;
